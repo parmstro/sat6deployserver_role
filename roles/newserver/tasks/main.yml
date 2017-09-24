@@ -183,7 +183,7 @@
 
 - name: restart the host 
   uri:
-    url: '{{ satHostsURL }}/{{ strHostName }}.parmstrong.ca/power/'
+    url: '{{ satHostsURL }}/{{ satHostName }}.parmstrong.ca/power/'
     method: POST
     user: "{{ satUser }}"
     password: "{{ satPass }}"
