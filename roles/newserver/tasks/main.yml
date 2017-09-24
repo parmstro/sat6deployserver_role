@@ -148,7 +148,7 @@
   when: satComputeResourceType == "Baremetal"
 
 - name: generate VM payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'52:54:00:ff:ff:ff','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
   when: satComputeResourceType != "Baremetal"
 
 - name: generate BareMetal payload
@@ -158,7 +158,7 @@
 - name: building system with the following settings
   debug: msg={{ payload }}
 
-- name: Creating the bare metal host
+- name: Creating the new server
   uri:
     url: '{{ satHostsURL }}'
     method: POST
