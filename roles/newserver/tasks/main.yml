@@ -178,29 +178,29 @@
 - name: output return data
   debug: msg={{ hostcreatedata }}
 
-# - name: generate retart payload
-#   set_fact: payload={'power_action':'reset'}
+- name: generate retart payload
+  set_fact: payload={'power_action':'reset'}
 
-# - name: get the hostid from the newly created host
-#   set_fact: satResetHostID={{ hostcreatedata.json | json.id) }}
+- name: get the hostid from the newly created host
+  set_fact: satResetHostID={{ hostcreatedata.json | json_query('json.id') }}
 
-# - name: restart the host 
-#   uri:
-#     url: '{{ satHostsURL }}/{{ satRestHostID }}/power/'
-#     method: POST
-#     user: "{{ satUser }}"
-#     password: "{{ satPass }}"
-#     force_basic_auth: yes
-#     validate_certs: no
-#     status_code: 201
-#     headers:
-#       Content-Type: application/json
-#       Accept: :application/json,version=2
-#     body_format: json
-#     body: >
-#       {{ payload }}
-#   register: hostrestartdata
+- name: restart the host 
+  uri:
+    url: '{{ satHostsURL }}/{{ satRestHostID }}/power'
+    method: PUT
+    user: "{{ satUser }}"
+    password: "{{ satPass }}"
+    force_basic_auth: yes
+    validate_certs: no
+    status_code: 201
+    headers:
+      Content-Type: application/json
+      Accept: :application/json,version=2
+    body_format: json
+    body: >
+      {{ payload }}
+  register: hostrestartdata
 
-# - name: output return data
-#   debug: msg={{ hostrestartdata }}
+- name: output return data
+  debug: msg={{ hostrestartdata }}
 
