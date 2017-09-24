@@ -181,6 +181,9 @@
 - name: generate retart payload
   set_fact: payload={'power_action':'reset'}
 
+- name: get the hostid from the newly created host
+  set_fact: satResetHostID={{ hostcreatedata.json | json.id) }}
+
 - name: restart the host 
   uri:
     url: '{{ satHostsURL }}/{{ satHostName }}.parmstrong.ca/power/'
