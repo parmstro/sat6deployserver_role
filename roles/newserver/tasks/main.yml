@@ -194,7 +194,7 @@
     password: "{{ satPass }}"
     force_basic_auth: yes
     validate_certs: no
-    status_code: 201
+    status_code: 200
     headers:
       Content-Type: application/json
       Accept: :application/json,version=2
