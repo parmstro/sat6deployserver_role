@@ -148,7 +148,7 @@
   when: satComputeResourceType == "Baremetal"
 
 - name: generate VM payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'null','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'nil','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
   when: satComputeResourceType != "Baremetal"
 
 - name: generate BareMetal payload
