@@ -184,9 +184,12 @@
 - name: get the hostid from the newly created host
   set_fact: satResetHostID={{ hostcreatedata.json | json_query('json.id') }}
 
+- name: output the hostid to find
+  debug: msg={{ hostcreatedata }}
+
 - name: restart the host 
   uri:
-    url: '{{ satHostsURL }}/{{ satResetHostID }}/power'
+    url: '{{ satHostsURL }}/{{ satHostName }}.parmstrong.ca/power'
     method: PUT
     user: "{{ satUser }}"
     password: "{{ satPass }}"
