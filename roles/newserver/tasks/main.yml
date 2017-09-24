@@ -16,6 +16,7 @@
 #    satLocationName: Hespeler
 #    satHostGroupName: ocp
 #    satComputeResourceType: Baremetal
+#    satComputeResourceName: ''
 #    satHostIPAddr: 10.0.0.33
 #    satHostName: ocpnode3
 #    satBMHNumberOfNICs: 3 
@@ -97,9 +98,12 @@
   debug: msg={{ satComputeResourceList }}
   when: satComputeResourceType != "Baremetal"
 
+
 - name: picking the first compute resource of type {{ satComputeResourceType }}
   set_fact: satComputeResourceName={{ satComputeResourceList[0] }}
-  when: satComputeResourceType != "Baremetal"
+  when: 
+   - satComputeResourceType != "Baremetal"
+   - satComputeResourceName == ""
 
 - name: using Compute Resource {{ satComputeResourceName }}
   debug: msg={{ satComputeResourceName }}
@@ -179,7 +183,7 @@
 
 - name: restart the host 
   uri:
-    url: '{{ satHostsURL }}/{{ strHostName }}.parmstrong.ca/power'
+    url: '{{ satHostsURL }}/{{ strHostName }}.parmstrong.ca/power/'
     method: POST
     user: "{{ satUser }}"
     password: "{{ satPass }}"
