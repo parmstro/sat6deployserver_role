@@ -186,7 +186,7 @@
 
 - name: restart the host 
   uri:
-    url: '{{ satHostsURL }}/{{ satRestHostID }}/power'
+    url: '{{ satHostsURL }}/{{ satResetHostID }}/power'
     method: PUT
     user: "{{ satUser }}"
     password: "{{ satPass }}"
