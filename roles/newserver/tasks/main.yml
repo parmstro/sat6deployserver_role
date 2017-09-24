@@ -179,7 +179,7 @@
   debug: msg={{ hostcreatedata }}
 
 - name: generate retart payload
-  set_fact: payload={'power_action':'reset', 'host':{}}
+  set_fact: payload={'power_action':'reset'}
 
 - name: restart the host 
   uri:
