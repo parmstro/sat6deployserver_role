@@ -7,7 +7,7 @@
 #
 # Alternately this is called from Tower with vars
 
-- name: Apply the new server role to a hostname
+- name: Create the servers specified in group_vars
   hosts: localhost
   become: yes
 

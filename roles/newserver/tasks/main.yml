@@ -17,11 +17,10 @@
 #    satHostGroupName: ocp
 #    satComputeResourceType: Baremetal
 #    satComputeResourceName: ''
-#    satHostIPAddr: 10.0.0.33
-#    satHostName: ocpnode3
+#    satHosts: a list of hostnames and IPs 
+#    
 #    satBMHNumberOfNICs: 3 
-# Made a change
-#
+# 
 #
 - name: get the list of organizations 
   uri:
@@ -98,14 +97,11 @@
   debug: msg={{ satComputeResourceList }}
   when: satComputeResourceType != "Baremetal"
 
-
-- name: picking the first compute resource of type {{ satComputeResourceType }}
+- name: picking the first compute resource of type "{{ satComputeResourceType }}"
   set_fact: satComputeResourceName={{ satComputeResourceList[0] }}
-  when: 
-   - satComputeResourceType != "Baremetal"
-   - satComputeResourceName == ""
+  when: satComputeResourceType != "Baremetal"
 
-- name: using Compute Resource {{ satComputeResourceName }}
+- name: using Compute Resource "{{ satComputeResourceName }}"
   debug: msg={{ satComputeResourceName }}
   when: satComputeResourceType != "Baremetal"
 
@@ -147,62 +143,6 @@
   set_fact: satBMHMac={{ satDiscoveredHostsList[0] }}
   when: satComputeResourceType == "Baremetal"
 
-- name: generate VM payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'52:54:00:ff:ff:ff','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
-  when: satComputeResourceType != "Baremetal"
-
-- name: generate BareMetal payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ satHostName }}','mac':'{{ satBMHMac }}','ip':'{{ satHostIPAddr }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
-  when: satComputeResourceType == "Baremetal"
-
-- name: building system with the following settings
-  debug: msg={{ payload }}
-
-- name: Creating the new server
-  uri:
-    url: '{{ satHostsURL }}'
-    method: POST
-    user: "{{ satUser }}"
-    password: "{{ satPass }}"
-    force_basic_auth: yes
-    validate_certs: no
-    status_code: 201
-    headers:
-      Content-Type: application/json
-      Accept: :application/json,version=2
-    body_format: json
-    body: >
-      {{ payload }}
-  register: hostcreatedata
-      
-- name: output return data
-  debug: msg={{ hostcreatedata }}
-
-- name: generate restart payload
-  set_fact: payload={'power_action':'start'}
-  when: satComputeResourceType != "Baremetal"
-
-- name: generate restart payload
-  set_fact: payload={'power_action':'reset'}
-  when: satComputeResourceType == "Baremetal"
-
-- name: restart the host 
-  uri:
-    url: '{{ satHostsURL }}/{{ satHostName }}.parmstrong.ca/power'
-    method: PUT
-    user: "{{ satUser }}"
-    password: "{{ satPass }}"
-    force_basic_auth: yes
-    validate_certs: no
-    status_code: 200
-    headers:
-      Content-Type: application/json
-      Accept: :application/json,version=2
-    body_format: json
-    body: >
-      {{ payload }}
-  register: hostrestartdata
-
-- name: output return data
-  debug: msg={{ hostrestartdata }}
-
+- name: build the new servers in the host list
+  include_tasks: deployserver.yml
+  loop: "{{ satHosts }}"

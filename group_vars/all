@@ -9,8 +9,16 @@ satUser: ansible
 satPass: ocelotappealbreadboardflashlight
 satOrganizationName: RedHatCanada
 satLocationName: Hespeler
-satHostGroupName: baseRHEL
-satComputeResourceType: Libvirt
-satHostIPAddr: 192.168.254.90
-satHostName: azureimage
+satHostGroupName: TestServer
+satComputeResourceType: Vmware
+satHosts: 
+  - name: jbosstest
+    ipaddr: 192.168.254.200
+    mac: 00:50:56:ff:ff:ff
+  - name: lamptest
+    ipaddr: 192.168.254.201
+    mac: 00:50:56:ff:ff:ff
+  - name: wptest
+    ipaddr: 192.168.254.202
+    mac: 00:50:56:ff:ff:ff  
 satBMHNumberOfNICs: 1

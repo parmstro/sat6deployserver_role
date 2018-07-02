@@ -1,0 +1,62 @@
+---
+
+- name: generate VM payload
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ item.ipaddr }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  when: satComputeResourceType != "Baremetal"
+
+- name: generate BareMetal payload
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','ip':'{{ item.name }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  when: satComputeResourceType == "Baremetal"
+
+- name: building system with the following settings
+  debug: msg={{ payload }}
+
+- name: Creating the new server
+  uri:
+    url: '{{ satHostsURL }}'
+    method: POST
+    user: "{{ satUser }}"
+    password: "{{ satPass }}"
+    force_basic_auth: yes
+    validate_certs: no
+    status_code: 201
+    headers:
+      Content-Type: application/json
+      Accept: :application/json,version=2
+    body_format: json
+    body: >
+      {{ payload }}
+  register: hostcreatedata
+
+- name: output return data
+  debug: msg={{ hostcreatedata }}
+
+- name: generate restart payload
+  set_fact: payload={'power_action':'start'}
+  when: satComputeResourceType != "Baremetal"
+
+- name: generate restart payload
+  set_fact: payload={'power_action':'reset'}
+  when: satComputeResourceType == "Baremetal"
+
+- name: restart the host
+  uri:
+    url: '{{ satHostsURL }}/{{ item.name }}.parmstrong.ca/power'
+    method: PUT
+    user: "{{ satUser }}"
+    password: "{{ satPass }}"
+    force_basic_auth: yes
+    validate_certs: no
+    status_code: 200
+    headers:
+      Content-Type: application/json
+      Accept: :application/json,version=2
+    body_format: json
+    body: >
+      {{ payload }}
+  register: hostrestartdata
+
+- name: output return data
+  debug: msg={{ hostrestartdata }}
+
+

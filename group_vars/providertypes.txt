@@ -1,0 +1,6 @@
+# availabile provider types in Sat 6.3
+# Ovirt - for RHVM or oVirt providers
+# Vmware 
+# EC2
+# Libvirt
+
