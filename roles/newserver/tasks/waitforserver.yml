@@ -1,0 +1,14 @@
+---
+# Don't assume the inventory_hostname is resolvable and delay 10 seconds at start
+
+- name: Wait 1h for systems to come up on port 22 and contain "OpenSSH" - checking every 60s
+  wait_for:
+    timeout: 3600
+    sleep: 60
+    port: 22
+    host: "{{ item.name }}.parmstrong.ca"
+    search_regex: OpenSSH
+    delay: 10
+  connection: local
+  with_items: "{{ satHosts }}"
+

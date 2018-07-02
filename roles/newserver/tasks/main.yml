@@ -146,3 +146,8 @@
 - name: build the new servers in the host list
   include_tasks: deployserver.yml
   loop: "{{ satHosts }}"
+
+- name: wait for the servers to complete the build
+  include_tasks: waitforservers.yml
+
+
