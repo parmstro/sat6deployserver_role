@@ -94,7 +94,7 @@
   set_fact: satComputeResourceList={{ computeresourcedata.json | json_query(satComputeResourceListQuery) }}
   when: satComputeResourceType != "Baremetal"
   vars:
-    satComputeResourceListQuery: "results[?provider=='{{ satComputeResourceType }}'].name"
+    satComputeResourceListQuery: "results[?provider=='{{ satComputeResourceType }}']"
 
 - name: output the ComputeResourceList for "{{ satComputeResourceType }}"
   debug: msg={{ satComputeResourceList }}
