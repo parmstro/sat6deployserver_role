@@ -9,7 +9,6 @@
 
 - name: Create the servers specified in group_vars
   hosts: localhost
-  become: yes
 
   roles:
     - newserver
