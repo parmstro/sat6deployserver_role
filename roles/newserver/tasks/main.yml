@@ -97,7 +97,7 @@
   debug: msg={{ satComputeResourceList }}
   when: satComputeResourceType != "Baremetal"
 
-- name: picking the first compute resource 
+- name: picking the first compute resource "{{ satComputeResourceType }}"
   set_fact: satComputeResourceName={{ satComputeResourceList[0] }}
   when: satComputeResourceType != "Baremetal"
 
