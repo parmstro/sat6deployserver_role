@@ -87,8 +87,14 @@
   register: computeresourcedata
   when: satComputeResourceType != "Baremetal"
 
+- name: Try setting a fact
+  set_fact: myjson={{ computeresourcedata.json }}
+
+- debug:
+    msg: "{{ myjson }}"
+
 - name: list the compute resources available  for "{{ satComputeResourceType }}"
-  set_fact: satComputeResourceList={{ computeresourcedata.json | json_query(satComputeResourceListQuery) }}
+  set_fact: satComputeResourceList={{ myjson | json_query(satComputeResourceListQuery) }}
   when: satComputeResourceType != "Baremetal"
   vars:
     satComputeResourceListQuery: "results[?provider=='{{ satComputeResourceType }}'].name"
