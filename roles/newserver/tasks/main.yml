@@ -98,7 +98,7 @@
   when: satComputeResourceType != "Baremetal"
 
 - name: picking the first compute resource "{{ satComputeResourceType }}"
-  set_fact: satComputeResourceName={{ satComputeResourceList[0] }}
+  set_fact: satComputeResourceName={{ satComputeResourceList }}
   when: satComputeResourceType != "Baremetal"
 
 - name: using Compute Resource "{{ satComputeResourceName }}"
