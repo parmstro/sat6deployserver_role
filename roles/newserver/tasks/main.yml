@@ -96,6 +96,9 @@
   vars:
     satComputeResourceListQuery: "results[?(@.provider=='{{ satComputeResourceType }}')].name"
 
+- debug:
+    msg: "{{ satComputerResourceListQuery }}"
+
 - name: output the ComputeResourceList for "{{ satComputeResourceType }}"
   debug: msg={{ satComputeResourceList }}
   when: satComputeResourceType != "Baremetal"
