@@ -97,7 +97,7 @@
     satComputeResourceListQuery: "results[?(@.provider=='{{ satComputeResourceType }}')].name"
 
 - debug:
-    msg: "{{ satComputerResourceListQuery }}"
+    msg: "results[?(@.provider=='{{ satComputeResourceType }}')].name" 
 
 - name: output the ComputeResourceList for "{{ satComputeResourceType }}"
   debug: msg={{ satComputeResourceList }}
