@@ -148,6 +148,6 @@
   loop: "{{ satHosts }}"
 
 - name: wait for the servers to complete the build
-  include_tasks: waitforservers.yml
+  include_tasks: waitforserver.yml
 
 
