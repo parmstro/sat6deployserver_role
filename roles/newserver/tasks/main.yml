@@ -91,10 +91,10 @@
     msg: "{{ computeresourcedata }}"
 
 - name: list the compute resources available  for "{{ satComputeResourceType }}"
-  set_fact: satComputeResourceList={{ computeresourcedata.json | from_json | json_query(satComputeResourceListQuery) }}
+  set_fact: satComputeResourceList={{ computeresourcedata.json | json_query(satComputeResourceListQuery) }}
   when: satComputeResourceType != "Baremetal"
   vars:
-    satComputeResourceListQuery: "results[?provider=='{{ satComputeResourceType }}']"
+    satComputeResourceListQuery: "results[?(@.provider=='{{ satComputeResourceType }}')].name"
 
 - name: output the ComputeResourceList for "{{ satComputeResourceType }}"
   debug: msg={{ satComputeResourceList }}
