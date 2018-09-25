@@ -7,7 +7,7 @@
 #
 # Alternately this is called from Tower with vars
 
-- name: Create the servers specified in group_vars
+- name: Create the servers specified
   hosts: localhost
 
   roles:

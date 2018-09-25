@@ -7,8 +7,8 @@
 #
 # Alternately this is called from Tower with vars
 
-- name: Create the servers specified in group_vars
-  hosts: localhost
+- name: Delete the servers specified 
+  hosts: sat6.parmstrong.ca
 
   roles:
     - deleteserver
