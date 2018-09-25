@@ -1,0 +1,9 @@
+---
+# This role is used to delete a server from Satellite. If the server is a VM, the VM and all its disks will be deleted as well
+# USE WITH CAUTION
+#
+
+- name: Delete the test VMs
+  command: "hammer host delete --name {{ item }}"
+  loop: "{{ servers_to_delete }}"
+

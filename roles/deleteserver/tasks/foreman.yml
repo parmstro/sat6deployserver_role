@@ -1,0 +1,12 @@
+---
+# This playbook abstracts the calls to the foreman objects in Satellite
+# 
+
+- name: "{{ name }}"
+  foreman:
+      username: "{{ username }}"
+      password: "{{ password }}"
+      server_url: "{{ satellite_server_url }}"
+      entity: "{{ entity }}"
+      params: "{{ params }}"
+  delegate_to: localhost

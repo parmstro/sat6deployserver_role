@@ -1,0 +1,11 @@
+---
+# This playbook abstracts the katello object calls for Satellite
+#
+- name: "{{ name }}"
+  katello:
+      username: "{{ username }}"
+      password: "{{ password }}"
+      server_url: "{{ satellite_server_url }}"
+      entity: "{{ entity }}"
+      params: "{{ params }}"
+  delegate_to: localhost
