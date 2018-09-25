@@ -8,6 +8,8 @@
 # Alternately this is called from Tower with vars
 
 - name: Delete the servers specified 
+  gather_facts: True 
+  remote_user: root
   hosts: sat6.parmstrong.ca
 
   roles:
