@@ -3,9 +3,15 @@
 # USE WITH CAUTION
 #
 
+- set_fact: 
+    cmdstring: "hammer --output json host list --search 'comment=""{{ build_comment }}""'"
+
 - name: Get the list of servers with the comment specified
-  command: hammer --output json host list --search 'comment="{{ build_comment }}"'
+  command: "{{ cmdstring }}"
   register: cmdoutput
+
+- debug:
+    msg: "{{ cmdoutput.stdout }}"
 
 - set_fact: servers_to_delete={{ cmdoutput.stdout | from_json | json_query(query) }}
   vars:
