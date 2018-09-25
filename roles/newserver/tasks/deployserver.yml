@@ -1,11 +1,11 @@
 ---
 
 - name: generate VM payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ item.ipaddr }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','compute_resource_id':{{ satComputeResourceID[0] }},'ip':'{{ item.ipaddr }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'{{ build_comment }}' }}"
   when: satComputeResourceType != "Baremetal"
 
 - name: generate BareMetal payload
-  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','ip':'{{ item.name }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'Added via ansible'}}"
+  set_fact: payload="{'host':{'organization_id':{{ satOrganizationID[0] }},'location_id':{{ satLocationID[0] }},'name':'{{ item.name }}','mac':'{{ item.mac }}','ip':'{{ item.name }}','build':'true','enabled':'true','powerup':1,'hostgroup_id':{{ satHostGroupID[0] }},'comment':'{{ build_comment }}'}}"
   when: satComputeResourceType == "Baremetal"
 
 - name: building system with the following settings

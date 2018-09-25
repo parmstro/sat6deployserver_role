@@ -1,3 +1,4 @@
+build_comment: "Added via ansible"
 satBaseURL: https://sat6.parmstrong.ca/api/v2/
 satOrgURL: "{{ satBaseURL }}organizations/"
 satLocURL: "{{ satBaseURL }}locations/"

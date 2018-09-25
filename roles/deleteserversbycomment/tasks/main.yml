@@ -1,0 +1,20 @@
+---
+# This role is used to delete a server from Satellite. If the server is a VM, the VM and all its disks will be deleted as well
+# USE WITH CAUTION
+#
+
+- name: Get the list of servers with the comment specified
+  command: "hammer --output json host list --search 'comment="{{ build comment }}"'"
+  register: cmdoutput
+
+- set_fact: servers_to_delete={{ cmdoutput.stdout | from_json | json_query(query) }}
+  vars:
+    query: "[*].Name"
+
+- debug:
+    msg: "The systems to be deleted are: {{ servers_to_delete }}" 
+
+- name: Delete the test VMs
+  command: "hammer host delete --name {{ item }}"
+  loop: "{{ servers_to_delete }}"
+
